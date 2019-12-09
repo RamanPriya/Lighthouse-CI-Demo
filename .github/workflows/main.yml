@@ -33,3 +33,21 @@ jobs:
     upload.serverBaseUrl: # optional
     # API token to push to LHCI server
     upload.token: # optional
+    
+    name: Lighthouse
+on: push # For every push, this action will be triggered
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest #OS
+    steps:
+      - uses: actions/checkout@v1
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v2
+        with:
+          urls:
+            https://ramanpriya.github.io/Lighthouse-CI-Demo/
+      - name: Save results
+        uses: actions/upload-artifact@v1
+        with:
+          name: lighthouse-results
+          path: '.lighthouseci' # This will save the Lighthouse results as .json files
